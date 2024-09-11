@@ -1,0 +1,53 @@
+[
+    {
+        "category": "General",
+        "questions": [
+            {
+                "question": "Introduction",
+                "answer": "Ces Conditions Générales d'Utilisation régissent votre utilisation de la marketplace SWILO en Tunisie. ..."
+            },
+            {
+                "question": "Accès à la Marketplace SWILO",
+                "answer": "Pour accéder à certains services de la marketplace SWILO en Tunisie, vous devrez créer un compte. ..."
+            }
+        ]
+    },
+    {
+        "category": "Payment",
+        "questions": [
+            {
+                "question": "Paiement",
+                "answer": "Les clients doivent payer les prestataires de services via la plateforme SWILO. Les paiements doivent être effectués en temps voulu ..."
+            },{
+                "question": "Paiement2",
+                "answer": "chiraz mariem"
+            }
+        ]
+    },
+    {
+        "category": "Services",
+        "questions": [
+            {
+                "question": "Services fournis",
+                "answer": "SWILO est une plateforme de services de nettoyage et de vente de produits et de machines de nettoyage écologiques. ..."
+            },
+            {
+                "question": "Sos",
+                "answer": " ..."
+            }
+        ]
+    },
+    {
+        "category": "maryem's friend",
+        "questions": [
+            {
+                "question": "how old is Chiraz",
+                "answer": "Chiraz is 21 years old"
+            },
+            {
+                "question": "how tall is Chiraz",
+                "answer": "Chiraz is 1.64m tall"
+            }
+        ]
+    }
+]

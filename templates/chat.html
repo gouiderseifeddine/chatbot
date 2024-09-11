@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}" />
+</head>
+
+<body>
+  <div class="container-fluid h-100">
+    <div class="row justify-content-center h-100">
+      <div class="col-md-8 col-xl-6 chat">
+        <div class="card">
+          <div class="card-header msg_head">
+            <div class="d-flex bd-highlight">
+              <div class="img_cont">
+                <img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img">
+                <span class="online_icon"></span>
+              </div>
+              <div class="user_info">
+                <span>ChatBot AAAAA</span>
+                <p>Ask me anything!</p>
+                <div id="loadingAnimation" class="typing-animation" style="display: none;">
+                  <div class="typing-dot"></div>
+                  <div class="typing-dot"></div>
+                  <div class="typing-dot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="messageFormeight" class="card-body msg_card_body">
+            <!-- Loading animation -->
+
+
+          </div>
+          <div id="categories" class="card-footer">
+            <button class="category-btn btn btn-secondary btn-block" data-category="General" id="r">General</button>
+            <button class="category-btn btn btn-secondary btn-block" data-category="Payment">Payment</button>
+            <button class="category-btn btn btn-secondary btn-block" data-category="Services">Services</button>
+            <button class="category-btn btn btn-secondary btn-block" data-category="maryem's friend">maryem's
+              friend</button>
+
+          </div>
+          <div id="questions" class="card-footer" style="display: none;">
+            <button id="goBackBtn" class="btn btn-secondary btn-block">Go Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      const questionsData = JSON.parse('{{ questions | tojson | safe }}');
+
+      function scrollToBottom() {
+        $("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+      }
+
+      $(".category-btn").click(function () {
+        var category = $(this).data("category");
+        var categoryQuestions = questionsData.find(cat => cat.category === category).questions;
+
+        $("#categories").hide();
+        $("#questions").empty().append('<button id="goBackBtn" class="btn btn-secondary btn-block">Go Back</button>').show();
+
+        categoryQuestions.forEach(qa => {
+          var questionBtn = $('<button class="question-btn btn btn-secondary btn-block"></button>');
+          questionBtn.text(qa.question);
+          questionBtn.data("answer", qa.answer);
+          $("#questions").append(questionBtn);
+        });
+
+        $(".question-btn").click(function () {
+          var question = $(this).text();
+          var answer = $(this).data("answer");
+          const date = new Date();
+          const hour = date.getHours();
+          const minute = date.getMinutes();
+          const str_time = hour + ":" + minute;
+
+          var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + question + '<span class="msg_time_send">' + str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
+          $("#messageFormeight").append(userHtml);
+
+          // Show loading animation and text
+          $("#loadingAnimation").show();
+          $("#messageFormeight").append('<div class="typing-text">Typing...</div>');
+
+          setTimeout(function () {
+            // Hide loading animation and text
+            $("#loadingAnimation").hide();
+            $(".typing-text").remove();
+
+            var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + answer + '<span class="msg_time">' + str_time + '</span></div></div>';
+            $("#messageFormeight").append(botHtml);
+
+            scrollToBottom();
+          }, 1000); // Simulating typing delay of 2 seconds
+        });
+
+
+        $("#goBackBtn").click(function () {
+          $("#questions").hide();
+          $("#categories").show();
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
